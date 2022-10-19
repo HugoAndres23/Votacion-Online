@@ -45,7 +45,7 @@ def account_register(request):
             voter.admin = user
             user.save()
             voter.save()
-            messages.success(request, "Account created. You can login now!")
+            messages.success(request, "Cuenta creada con exito! Puedes iniciar sesion.")
             return redirect(reverse('account_login'))
         else:
             messages.error(request, "Provided data failed validation")
@@ -57,9 +57,9 @@ def account_logout(request):
     user = request.user
     if user.is_authenticated:
         logout(request)
-        messages.success(request, "Thank you for visiting us!")
+        messages.success(request, "Gracias por visitarnos.")
     else:
         messages.error(
-            request, "You need to be logged in to perform this action")
+            request, "Necesitas estar logeado para acceder a esta función.")
 
     return redirect(reverse("account_login"))

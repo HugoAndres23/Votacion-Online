@@ -11,7 +11,6 @@
     <form action="{% url 'account_register' %}" method="POST">
                 {% csrf_token %}
 
-             
                 <div class="modal-body">
                     {% for field in form1  %}
                     <div class="form-group has-feedback">

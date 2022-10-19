@@ -5,7 +5,7 @@ from account.models import CustomUser
 
 class Voter(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=11, unique=True)  # Used for OTP
+    cedula = models.CharField(max_length=10, unique=True)  # Used for OTP
     otp = models.CharField(max_length=10, null=True)
     verified = models.BooleanField(default=False)
     voted = models.BooleanField(default=False)
@@ -27,7 +27,7 @@ class Position(models.Model):
 class Candidate(models.Model):
     fullname = models.CharField(max_length=50)
     photo = models.ImageField(upload_to="candidates")
-    bio = models.TextField()
+    bio = models.TextField(max_length=85, null=True)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
 
     def __str__(self):

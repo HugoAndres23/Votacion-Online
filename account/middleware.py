@@ -16,12 +16,12 @@ class AccountCheckMiddleWare(MiddlewareMixin):
                         pass
                     else:
                         messages.error(
-                            request, "You do not have access to this resource")
+                            request, "No tienes permiso a esta recurso.")
                         return redirect(reverse('adminDashboard'))
             elif user.user_type == '2':  # Voter
                 if modulename == 'administrator.views':
                     messages.error(
-                        request, "You do not have access to this resource")
+                        request, "No tienes acceso a este recurso.")
                     return redirect(reverse('voterDashboard'))
             else:  # None of the aforementioned ? Please take the user to login page
                 return redirect(reverse('account_login'))

@@ -157,7 +157,7 @@ def view_voter_by_id(request):
         voter = voter[0]
         context['first_name'] = voter.admin.first_name
         context['last_name'] = voter.admin.last_name
-        context['phone'] = voter.phone
+        context['cedula'] = voter.cedula
         context['id'] = voter.id
         context['email'] = voter.admin.email
     return JsonResponse(context)
@@ -187,7 +187,7 @@ def updateVoter(request):
         voter = VoterForm(request.POST or None, instance=instance)
         user.save()
         voter.save()
-        messages.success(request, "Voter's bio updated")
+        messages.success(request, "Datos del votante")
     except:
         messages.error(request, "Access To This Resource Denied")
 
