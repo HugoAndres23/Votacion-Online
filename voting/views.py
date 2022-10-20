@@ -40,7 +40,7 @@ def generate_ballot(display_controls=False):
                 input_box = '<input value="'+str(candidate.id)+'" type="radio" class="flat-red ' + \
                     position_name+'" name="'+position_name+'">'
             image = "/media/" + str(candidate.photo)
-            candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-fullname="'+candidate.fullname+'" data-bio="'+candidate.bio+'"><i class="fa fa-search"></i> Platform</button><img src="' + \
+            candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-fullname="'+candidate.nombrecompleto+'" data-slogan="'+candidate.slogan+'"><i class="fa fa-search"></i> Platform</button><img src="' + \
                 image+'" height="100px" width="100px" class="clist"><span class="cname clist">' + \
                 candidate.fullname+'</span></li>'
         up = ''
@@ -193,7 +193,7 @@ def send_sms(cedula_number, msg):
     email = os.environ.get('SMS_EMAIL')
     password = os.environ.get('SMS_PASSWORD')
     if email is None or password is None:
-        raise Exception("Email/Password cannot be Null")
+        raise Exception("Email/Contraseña no pueden estar vacios")
     url = "https://app.multitexter.com/v2/app/sms"
     data = {"email": email, "password": password, "message": msg,
             "sender_name": "OTP", "recipients": cedula_number, "forcednd": 1}
@@ -393,11 +393,11 @@ def submit_ballot(request):
     if (inserted_votes.count() != form_count):
         # Delete
         inserted_votes.delete()
-        messages.error(request, "Please try voting again!")
+        messages.error(request, "Intenta votar de nuevo.")
         return redirect(reverse('show_ballot'))
     else:
         # Update Voter profile to voted
         voter.voted = True
         voter.save()
-        messages.success(request, "Thanks for voting")
+        messages.success(request, "Gracias por votar")
         return redirect(reverse('voterDashboard'))

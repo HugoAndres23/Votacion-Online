@@ -24,7 +24,7 @@ def find_n_winners(data, n):
         this_winner = max(candidate_data, key=lambda x: x['votes'])
         # TODO: Check if None
         this = this_winner['name'] + \
-            " with " + str(this_winner['votes']) + " votes"
+            " con " + str(this_winner['votes']) + " votes"
         final_list.append(this)
         candidate_data.remove(this_winner)
     return ", &nbsp;".join(final_list)
@@ -118,7 +118,7 @@ def dashboard(request):
         'voted_voters_count': voted_voters.count(),
         'positions': positions,
         'chart_data': chart_data,
-        'page_title': "Dashboard"
+        'page_title': "Panel de control"
     }
     return render(request, "admin/home.html", context)
 
@@ -140,7 +140,7 @@ def voters(request):
             voter.admin = user
             user.save()
             voter.save()
-            messages.success(request, "New voter created")
+            messages.success(request, "Nuevo votante creado.")
         else:
             messages.error(request, "Form validation failed")
     return render(request, "admin/voters.html", context)
@@ -189,7 +189,7 @@ def updateVoter(request):
         voter.save()
         messages.success(request, "Datos del votante")
     except:
-        messages.error(request, "Access To This Resource Denied")
+        messages.error(request, "Acceso a este recurso denegado")
 
     return redirect(reverse('adminViewVoters'))
 
@@ -200,7 +200,7 @@ def deleteVoter(request):
     try:
         admin = Voter.objects.get(id=request.POST.get('id')).admin
         admin.delete()
-        messages.success(request, "Voter Has Been Deleted")
+        messages.success(request, "El votante a sido eliminado")
     except:
         messages.error(request, "Access To This Resource Denied")
 
@@ -220,7 +220,7 @@ def viewPositions(request):
             form = form.save(commit=False)
             form.priority = positions.count() + 1  # Just in case it is empty.
             form.save()
-            messages.success(request, "New Position Created")
+            messages.success(request, "Nueva candidatura creada.")
         else:
             messages.error(request, "Form errors")
     return render(request, "admin/positions.html", context)
@@ -233,7 +233,7 @@ def updatePosition(request):
         instance = Position.objects.get(id=request.POST.get('id'))
         pos = PositionForm(request.POST or None, instance=instance)
         pos.save()
-        messages.success(request, "Position has been updated")
+        messages.success(request, "Candidatura modificada con exito!")
     except:
         messages.error(request, "Access To This Resource Denied")
 
@@ -246,7 +246,7 @@ def deletePosition(request):
     try:
         pos = Position.objects.get(id=request.POST.get('id'))
         pos.delete()
-        messages.success(request, "Position Has Been Deleted")
+        messages.success(request, "Candidatura eliminada.")
     except:
         messages.error(request, "Access To This Resource Denied")
 
@@ -264,7 +264,7 @@ def viewCandidates(request):
     if request.method == 'POST':
         if form.is_valid():
             form = form.save()
-            messages.success(request, "New Candidate Created")
+            messages.success(request, "Nuevo candidato creado.")
         else:
             messages.error(request, "Form errors")
     return render(request, "admin/candidates.html", context)
@@ -280,7 +280,7 @@ def updateCandidate(request):
                              request.FILES or None, instance=candidate)
         if form.is_valid():
             form.save()
-            messages.success(request, "Candidate Data Updated")
+            messages.success(request, "Candidato actualizado.")
         else:
             messages.error(request, "Form has errors")
     except:
@@ -295,7 +295,7 @@ def deleteCandidate(request):
     try:
         pos = Candidate.objects.get(id=request.POST.get('id'))
         pos.delete()
-        messages.success(request, "Candidate Has Been Deleted")
+        messages.success(request, "Candidato eliminado.")
     except:
         messages.error(request, "Access To This Resource Denied")
 
@@ -370,7 +370,7 @@ def ballot_title(request):
         file.write(title)
         file.close()
         messages.success(
-            request, "Election title has been changed to " + str(title))
+            request, "La eleccion ha cambiado su titulo a " + str(title))
         return redirect(url)
     except Exception as e:
         messages.error(request, e)
@@ -389,5 +389,5 @@ def viewVotes(request):
 def resetVote(request):
     Votes.objects.all().delete()
     Voter.objects.all().update(voted=False, verified=False, otp=None)
-    messages.success(request, "All votes has been reset")
+    messages.success(request, "Todos los votos han sido reiniciados.")
     return redirect(reverse('viewVotes'))

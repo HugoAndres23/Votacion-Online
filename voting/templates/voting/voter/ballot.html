@@ -43,8 +43,8 @@ aria-hidden="true">&times;</button>
 
       $(document).on('click', '.platform', function(e) {
           e.preventDefault();
-          $('#bio').modal('show');
-          var platform = $(this).data('bio');
+          $('#slogan').modal('show');
+          var platform = $(this).data('slogan');
           var fullname = $(this).data('fullname');
           $('.candidate').html(fullname);
           $('#plat_view').html(platform);
@@ -87,7 +87,7 @@ aria-hidden="true">&times;</button>
 
 {% block modal %}
 
-<div class="modal fade" id="bio">
+<div class="modal fade" id="slogan">
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">

@@ -12,7 +12,6 @@ class FormSettings(forms.ModelForm):
 
 class CustomUserForm(FormSettings):
     email = forms.EmailField(required=True)
-    # email = forms.EmailField(required=True)
     password = forms.CharField(widget=forms.PasswordInput)
 
     widget = {
@@ -27,7 +26,7 @@ class CustomUserForm(FormSettings):
             for field in CustomUserForm.Meta.fields:
                 self.fields[field].initial = instance.get(field)
             if self.instance.pk is not None:
-                self.fields['password'].widget.attrs['placeholder'] = "Fill this only if you wish to update password"
+                self.fields['password'].widget.attrs['placeholder'] = "Rellene los campos si desea cambiar su contraseña."
         else:
             self.fields['first_name'].required = True
             self.fields['last_name'].required = True
@@ -37,14 +36,14 @@ class CustomUserForm(FormSettings):
         if self.instance.pk is None:  # Insert
             if CustomUser.objects.filter(email=formEmail).exists():
                 raise forms.ValidationError(
-                    "The given email is already registered")
+                    "Este email ya ha sido registrado")
         else:  # Update
             dbEmail = self.Meta.model.objects.get(
                 id=self.instance.pk).email.lower()
             if dbEmail != formEmail:  # There has been changes
                 if CustomUser.objects.filter(email=formEmail).exists():
                     raise forms.ValidationError(
-                        "The given email is already registered")
+                        "Este email ya ha sido registrado")
         return formEmail
 
     def clean_password(self):

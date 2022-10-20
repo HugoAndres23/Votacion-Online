@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('fullname', models.CharField(max_length=50)),
                 ('photo', models.ImageField(upload_to='candidates')),
-                ('bio', models.TextField()),
+                ('slogan', models.TextField()),
             ],
         ),
         migrations.CreateModel(
