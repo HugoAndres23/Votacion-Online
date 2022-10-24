@@ -6,7 +6,7 @@
 <div class="box">
 <div class="box-header with-border">
   <a href="#addnew" data-toggle="modal" class="btn btn-success btn-sm btn-flat"><i
-          class="fa fa-plus"></i> Add New</a>
+          class="fa fa-plus"></i> Agregar nuevo votante</a>
 </div>
 <div class="box-body">
   <table id="example1" class="table table-bordered table-hover table-striped">
@@ -14,8 +14,8 @@
           <th>Nombre</th>
           <th>Apellidos</th>
           <th>Email</th>
-          <th>Cedula</th>
-          <th>opciones</th>
+          <th>Cédula</th>
+          <th>Opciones</th>
       </thead>
       <tbody>
     {% for voter in voters %}
@@ -24,7 +24,7 @@
       <td>{{ voter.admin.first_name }}</td>
       <td>{{ voter.admin.last_name }}</td>
       <td>{{ voter.admin.email }}</td>
-      <td>{{ voter.cedula }}</td>
+      <td>{{ voter.cédula }}</td>
       
       <td>
         <button class='btn btn-primary btn-sm edit btn-flat' data-id='{{ voter.id }}'><i class='fa fa-edit'></i> Editar</button>
@@ -115,10 +115,10 @@
                 </div>
             </div>
             <div class="form-group">
-              <label for="edit_cedula" class="col-sm-3 control-label">Cedula</label>
+              <label for="edit_cédula" class="col-sm-3 control-label">Cédula</label>
 
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="edit_cedula" name="cedula">
+                <input type="text" class="form-control" id="edit_cédula" name="cédula">
               </div>
           </div> 
 
@@ -195,11 +195,11 @@
           dataType: 'json',
           success: function(response) {
               $('.id').val(response.id);
-              $('#edit_firstname').val(response.first_name);
+              $('#edit_firstname').val(response.nombre);
               $('#edit_lastname').val(response.last_name);
-              $('#edit_cedula').val(response.cedula);
+              $('#edit_cédula').val(response.cédula);
               $('#edit_email').val(response.email);
-              $('.fullname').html(response.first_name + ' ' + response.last_name);
+              $('.fullname').html(response.nombre + ' ' + response.last_name);
           }
       });
   }

@@ -25,7 +25,7 @@ def account_login(request):
             else:
                 return redirect(reverse("voterDashboard"))
         else:
-            messages.error(request, "Invalid details")
+            messages.error(request, "Error en los campos")
             return redirect("/")
 
     return render(request, "voting/login.html", context)
@@ -48,7 +48,7 @@ def account_register(request):
             messages.success(request, "Cuenta creada con exito! Puedes iniciar sesion.")
             return redirect(reverse('account_login'))
         else:
-            messages.error(request, "Provided data failed validation")
+            messages.error(request, "Validacion de información fallada")
             # return account_login(request)
     return render(request, "voting/reg.html", context)
 

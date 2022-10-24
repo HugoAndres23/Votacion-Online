@@ -30,17 +30,17 @@ def generate_ballot(display_controls=False):
         candidates = Candidate.objects.filter(position=position)
         for candidate in candidates:
             if position.max_vote > 1:
-                instruction = "You may select up to " + \
-                    str(position.max_vote) + " candidates"
+                instruction = "Puedes seleccionar " + \
+                    str(position.max_vote) + " candidatos"
                 input_box = '<input type="checkbox" value="'+str(candidate.id)+'" class="flat-red ' + \
                     position_name+'" name="' + \
                     position_name+"[]" + '">'
             else:
-                instruction = "Select only one candidate"
+                instruction = "Seleccione solo 1 candidato"
                 input_box = '<input value="'+str(candidate.id)+'" type="radio" class="flat-red ' + \
                     position_name+'" name="'+position_name+'">'
             image = "/media/" + str(candidate.photo)
-            candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-fullname="'+candidate.nombrecompleto+'" data-slogan="'+candidate.slogan+'"><i class="fa fa-search"></i> Platform</button><img src="' + \
+            candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-fullname="'+candidate.fullname+'" data-slogan="'+candidate.slogan+'"><i class="fa fa-search"></i> Información</button><img src="' + \
                 image+'" height="100px" width="100px" class="clist"><span class="cname clist">' + \
                 candidate.fullname+'</span></li>'
         up = ''
@@ -63,7 +63,7 @@ def generate_ballot(display_controls=False):
         <div class="box-body">
         <p>{instruction}
         <span class="pull-right">
-        <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="{position_name}"><i class="fa fa-refresh"></i> Reset</button>
+        <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="{position_name}"><i class="fa fa-refresh"></i> Reiniciar</button>
         </span>
         </p>
         <div id="candidate_list">
@@ -142,7 +142,7 @@ def resend_otp(request):
             error = True
             response = "You have requested OTP three times. You cannot do this again! Please enter previously sent OTP"
         else:
-            cedula = voter.cedula
+            cédula = voter.cédula
             # Now, check if an OTP has been generated previously for this voter
             otp = voter.otp
             if otp is None:
@@ -153,14 +153,14 @@ def resend_otp(request):
             try:
                 msg = "Dear " + str(user) + ", kindly use " + \
                     str(otp) + " as your OTP"
-                message_is_sent = send_sms(cedula, msg)
+                message_is_sent = send_sms(cédula, msg)
                 if message_is_sent:  # * OTP was sent successfully
                     # Update how many OTP has been sent to this voter
                     # Limited to Three so voters don't exhaust OTP balance
                     voter.otp_sent = voter.otp_sent + 1
                     voter.save()
 
-                    response = "OTP has been sent to your cedula number. Please provide it in the box provided below"
+                    response = "OTP has been sent to your cédula number. Please provide it in the box provided below"
                 else:
                     error = True
                     response = "OTP not sent. Please try again"
@@ -178,11 +178,11 @@ def resend_otp(request):
 
 def bypass_otp():
     Voter.objects.all().filter(otp=None, verified=False).update(otp="0000", verified=True)
-    response = "Kindly cast your vote"
+    response = "Vote por el candidato que desee"
     return response
 
 
-def send_sms(cedula_number, msg):
+def send_sms(cédula_number, msg):
     """Read More
     https://www.multitexter.com/developers
     """
@@ -196,7 +196,7 @@ def send_sms(cedula_number, msg):
         raise Exception("Email/Contraseña no pueden estar vacios")
     url = "https://app.multitexter.com/v2/app/sms"
     data = {"email": email, "password": password, "message": msg,
-            "sender_name": "OTP", "recipients": cedula_number, "forcednd": 1}
+            "sender_name": "OTP", "recipients": cédula_number, "forcednd": 1}
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     r = requests.post(url, data=json.dumps(data), headers=headers)
     response = r.json()
@@ -335,7 +335,7 @@ def submit_ballot(request):
 
     # Ensure at least one vote is selected
     if len(form.keys()) < 1:
-        messages.error(request, "Please select at least one candidate")
+        messages.error(request, "Por favor seleccione un candidato")
         return redirect(reverse('show_ballot'))
     positions = Position.objects.all()
     form_count = 0

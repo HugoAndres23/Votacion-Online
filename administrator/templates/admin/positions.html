@@ -25,8 +25,8 @@
       <td>{{ position.priority }}</td>
       
       <td>
-        <button class='btn btn-primary btn-sm edit btn-flat' data-id='{{ position.id }}'><i class='fa fa-edit'></i> Edit</button>
-        <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ position.id }}'><i class='fa fa-trash'></i> Delete</button>
+        <button class='btn btn-primary btn-sm edit btn-flat' data-id='{{ position.id }}'><i class='fa fa-edit'></i> Editar</button>
+        <button class='btn btn-danger btn-sm delete btn-flat' data-id='{{ position.id }}'><i class='fa fa-trash'></i> Eliminar</button>
       </td>
     </tr>
     {% endfor %}      
@@ -48,7 +48,7 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><b>Add New Position</b></h4>
+            <h4 class="modal-title"><b>Agregar nueva candidatura</b></h4>
           </div>
           <div class="modal-body">
             <form class="form-horizontal" method="POST" action="{% url 'viewPositions' %}">
@@ -67,7 +67,7 @@
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <button type="button" class="btn btn-danger btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
             <button type="submit" class="btn btn-success btn-flat" name="add"><i class="fa fa-save"></i> Guardar</button>
           </div></form></div></div></div></div>
 
@@ -78,14 +78,14 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><b>Edit Position</b></h4>
+            <h4 class="modal-title"><b>Editar candidatura</b></h4>
           </div>
           <div class="modal-body">
             <form class="form-horizontal" method="POST" action="{% url 'updatePosition' %}">
               {% csrf_token %}
               <input type="hidden" class="id" name="id">
               <div class="form-group">
-                <label for="name" class="col-sm-3 control-label">Name</label>
+                <label for="name" class="col-sm-3 control-label">Nombre</label>
 
                 <div class="col-sm-9">
                   <input type="text" class="form-control" id="name" name="name">
@@ -104,8 +104,8 @@
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-            <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i> Update</button>
+            <button type="button" class="btn btn-danger btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
+            <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i> Actualizar</button>
             </form>
           </div>
       </div>
@@ -119,7 +119,7 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><b>Deleting...</b></h4>
+            <h4 class="modal-title"><b>Eliminando...</b></h4>
           </div>
           <div class="modal-body">
             <form class="form-horizontal" method="POST" action="{% url 'deletePosition' %}">
@@ -131,8 +131,8 @@
               </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-            <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Delete</button>
+            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
+            <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Eliminar</button>
             </form>
           </div>
       </div>

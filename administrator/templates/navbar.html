@@ -3,7 +3,7 @@
   <!-- Logo -->
   <a href="{% url 'adminDashboard' %}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini">O V S</span>
+    <span class="logo-mini">S V</span>
     <!-- logo for regular state and mobile devices -->
     <span class="logo-lg"><b>Strategic Vote </span>
   </a>
@@ -28,15 +28,15 @@
               <img src="{% static 'images/userplaceholder.png' %}" class="img-circle" alt="User Image">
 
               <p>
-                Usuario  <small>Se unió en el 2022</small>
+                Usuario <small>Se unió en el 2022</small>
               </p>
             </li>
             <li class="user-footer">
               <div class="pull-left">
-                <a href="#profile" data-toggle="modal" class="btn btn-primary btn-flat" id="admin_profile">Update</a>
+                {% comment %} <a href="#profile" data-toggle="modal" class="btn btn-primary btn-flat" id="admin_profile">Editar</a> {% endcomment %}
               </div>
               <div class="pull-right">
-                <a href="{% url 'account_logout' %}" class="btn btn-danger btn-flat">Logout</a>
+                <a href="{% url 'account_logout' %}" class="btn btn-danger btn-flat">Cerrar sesión</a>
               </div>
             </li>
           </ul>

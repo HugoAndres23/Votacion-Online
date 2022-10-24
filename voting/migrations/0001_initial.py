@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
             name='Voter',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cedula', models.CharField(max_length=10, unique=True)),
+                ('cédula', models.CharField(max_length=10, unique=True)),
                 ('otp', models.CharField(max_length=10, null=True)),
                 ('verified', models.BooleanField(default=False)),
                 ('voted', models.BooleanField(default=False)),

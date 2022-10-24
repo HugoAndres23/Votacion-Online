@@ -20,7 +20,7 @@
     <ul class="sidebar-menu" data-widget="tree">
       {% if request.user.user_type == '1' %}
 
-      <li class="header">REPORTS</li>
+      <li class="header">Estadísticas</li>
       <li class="">
         <a href="{% url 'adminDashboard' %}"
           ><i class="fa fa-dashboard"></i> <span>Panel de control</span></a
@@ -31,40 +31,40 @@
           ><span class="glyphicon glyphicon-lock"></span> <span>Votos</span></a
         >
       </li>
-      <li class="header">MANAGE</li>
+      <li class="header">Configurar</li>
       <li class="">
         <a href="{% url 'adminViewVoters' %}"
-          ><i class="fa fa-users"></i> <span>Voters</span></a
+          ><i class="fa fa-users"></i> <span>Votantes</span></a
         >
       </li>
       <li class="">
         <a href="{% url 'viewPositions' %}"
-          ><i class="fa fa-tasks"></i> <span>Positions</span></a
+          ><i class="fa fa-tasks"></i> <span>Candidaturas</span></a
         >
       </li>
       <li class="">
         <a href="{% url 'viewCandidates' %}"
-          ><i class="fa fa-black-tie"></i> <span>Candidates</span></a
+          ><i class="fa fa-black-tie"></i> <span>Candidatos</span></a
         >
       </li>
-      <li class="header">SETTINGS</li>
+      <li class="header">Editar</li>
       <li class="">
-        <a href="{% url 'ballot_position' %}"
+        {% comment %} <a href="{% url 'ballot_position' %}"
           ><i class="fa fa-file-text"></i> <span>Ballot Position</span></a
-        >
+        > {% endcomment %}
       </li>
       <li class="">
         <a href="#config" data-toggle="modal"
-          ><i class="fa fa-font"></i> <span>Election Title</span></a
+          ><i class="fa fa-font"></i> <span>Nombre de la elección</span></a
         >
       </li>
 
       {% endif %}
 
-      <li class="header">EXIT</li>
+      <li class="header">Salir</li>
       <li class="">
         <a href="{% url 'account_logout' %}"
-          ><i class="fa fa-power-off"></i> <span>Logout</span></a
+          ><i class="fa fa-power-off"></i> <span>Cerrar sesión</span></a
         >
       </li>
     </ul>

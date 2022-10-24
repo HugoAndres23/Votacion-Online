@@ -36,7 +36,7 @@ class PrintView(PDFView):
 
     @property
     def download_name(self):
-        return "result.pdf"
+        return "Resultados.pdf"
 
     def get_context_data(self, *args, **kwargs):
         title = "E-voting"
@@ -60,7 +60,7 @@ class PrintView(PDFView):
                 position.name), " = ", str(candidate_data))
             # ! Check Winner
             if len(candidate_data) < 1:
-                winner = "Position does not have candidates"
+                winner = "Esta candidatura no tiene candidatos"
             else:
                 # Check if max_vote is more than 1
                 if position.max_vote > 1:
@@ -69,7 +69,7 @@ class PrintView(PDFView):
 
                     winner = max(candidate_data, key=lambda x: x['votes'])
                     if winner['votes'] == 0:
-                        winner = "No one voted for this yet position, yet."
+                        winner = "Nadie a votado por esta candidatura"
                     else:
                         """
                         https://stackoverflow.com/questions/18940540/how-can-i-count-the-occurrences-of-an-item-in-a-list-of-dictionaries
@@ -79,7 +79,7 @@ class PrintView(PDFView):
                         if count > 1:
                             winner = f"There are {count} candidates with {winner['votes']} votes"
                         else:
-                            winner = "Winner : " + winner['name']
+                            winner = "Ganador : " + winner['name']
             print("Candidate Data For  ", str(
                 position.name), " = ", str(candidate_data))
             position_data[position.name] = {
@@ -131,7 +131,7 @@ def voters(request):
         'form1': userForm,
         'form2': voterForm,
         'voters': voters,
-        'page_title': 'Voters List'
+        'page_title': 'Lista de votantes'
     }
     if request.method == 'POST':
         if userForm.is_valid() and voterForm.is_valid():
@@ -142,7 +142,7 @@ def voters(request):
             voter.save()
             messages.success(request, "Nuevo votante creado.")
         else:
-            messages.error(request, "Form validation failed")
+            messages.error(request, "Votante no creado.")
     return render(request, "admin/voters.html", context)
 
 
@@ -157,7 +157,7 @@ def view_voter_by_id(request):
         voter = voter[0]
         context['first_name'] = voter.admin.first_name
         context['last_name'] = voter.admin.last_name
-        context['cedula'] = voter.cedula
+        context['cédula'] = voter.cédula
         context['id'] = voter.id
         context['email'] = voter.admin.email
     return JsonResponse(context)
@@ -196,13 +196,13 @@ def updateVoter(request):
 
 def deleteVoter(request):
     if request.method != 'POST':
-        messages.error(request, "Access Denied")
+        messages.error(request, "Acceso denegado")
     try:
         admin = Voter.objects.get(id=request.POST.get('id')).admin
         admin.delete()
         messages.success(request, "El votante a sido eliminado")
     except:
-        messages.error(request, "Access To This Resource Denied")
+        messages.error(request, "Acceso denegado")
 
     return redirect(reverse('adminViewVoters'))
 
@@ -213,7 +213,7 @@ def viewPositions(request):
     context = {
         'positions': positions,
         'form1': form,
-        'page_title': "Positions"
+        'page_title': "Candidaturas"
     }
     if request.method == 'POST':
         if form.is_valid():
@@ -222,33 +222,33 @@ def viewPositions(request):
             form.save()
             messages.success(request, "Nueva candidatura creada.")
         else:
-            messages.error(request, "Form errors")
+            messages.error(request, "Error de formato.")
     return render(request, "admin/positions.html", context)
 
 
 def updatePosition(request):
     if request.method != 'POST':
-        messages.error(request, "Access Denied")
+        messages.error(request, "Acceso denegado")
     try:
         instance = Position.objects.get(id=request.POST.get('id'))
         pos = PositionForm(request.POST or None, instance=instance)
         pos.save()
         messages.success(request, "Candidatura modificada con exito!")
     except:
-        messages.error(request, "Access To This Resource Denied")
+        messages.error(request, "Accesso denegado")
 
     return redirect(reverse('viewPositions'))
 
 
 def deletePosition(request):
     if request.method != 'POST':
-        messages.error(request, "Access Denied")
+        messages.error(request, "Acceso denegado")
     try:
         pos = Position.objects.get(id=request.POST.get('id'))
         pos.delete()
         messages.success(request, "Candidatura eliminada.")
     except:
-        messages.error(request, "Access To This Resource Denied")
+        messages.error(request, "Acceso denegado")
 
     return redirect(reverse('viewPositions'))
 
@@ -259,12 +259,12 @@ def viewCandidates(request):
     context = {
         'candidates': candidates,
         'form1': form,
-        'page_title': 'Candidates'
+        'page_title': 'Candidatos'
     }
     if request.method == 'POST':
         if form.is_valid():
             form = form.save()
-            messages.success(request, "Nuevo candidato creado.")
+            messages.success(request, "Nuevo candidato creado")
         else:
             messages.error(request, "Form errors")
     return render(request, "admin/candidates.html", context)
@@ -272,7 +272,7 @@ def viewCandidates(request):
 
 def updateCandidate(request):
     if request.method != 'POST':
-        messages.error(request, "Access Denied")
+        messages.error(request, "Acceso denegado")
     try:
         candidate_id = request.POST.get('id')
         candidate = Candidate.objects.get(id=candidate_id)
@@ -282,22 +282,22 @@ def updateCandidate(request):
             form.save()
             messages.success(request, "Candidato actualizado.")
         else:
-            messages.error(request, "Form has errors")
+            messages.error(request, "Error en el formato.")
     except:
-        messages.error(request, "Access To This Resource Denied")
+        messages.error(request, "Acceso denegado")
 
     return redirect(reverse('viewCandidates'))
 
 
 def deleteCandidate(request):
     if request.method != 'POST':
-        messages.error(request, "Access Denied")
+        messages.error(request, "Acceso denegado")
     try:
         pos = Candidate.objects.get(id=request.POST.get('id'))
         pos.delete()
         messages.success(request, "Candidato eliminado.")
     except:
-        messages.error(request, "Access To This Resource Denied")
+        messages.error(request, "Acceso denegado")
 
     return redirect(reverse('viewCandidates'))
 
@@ -381,7 +381,7 @@ def viewVotes(request):
     votes = Votes.objects.all()
     context = {
         'votes': votes,
-        'page_title': 'Votes'
+        'page_title': 'Votos'
     }
     return render(request, "admin/votes.html", context)
 
