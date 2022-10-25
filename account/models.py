@@ -8,28 +8,28 @@ from django.dispatch import receiver
 
 
 class CustomUserManager(UserManager):
-    def _create_user(self, email, password, **extra_fields):
+    def _create_user(self, email, contraseña, **extra_fields):
         email = self.normalize_email(email)
         user = CustomUser(email=email, **extra_fields)
-        user.password = make_password(password)
+        user.contraseña = make_password(contraseña)
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, contraseña=None, **extra_fields):
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(email, contraseña, **extra_fields)
 
-    def create_superuser(self, email, password=None, **extra_fields):
+    def create_superuser(self, email, contraseña=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("user_type", 1)
-        extra_fields.setdefault("last_name", "")
-        extra_fields.setdefault("first_name", "Administrador")
+        extra_fields.setdefault("apellido", "")
+        extra_fields.setdefault("nombre", "Administrador")
 
         assert extra_fields["is_staff"]
         assert extra_fields["is_superuser"]
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(email, contraseña, **extra_fields)
 
 
 class CustomUser(AbstractUser):
@@ -44,4 +44,4 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.last_name + " " + self.first_name
+        return self.apellido + " " + self.nombre

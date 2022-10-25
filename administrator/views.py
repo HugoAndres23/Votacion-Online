@@ -135,8 +135,8 @@ def voters(request):
     }
     if request.method == 'POST':
         if userForm.is_valid() and voterForm.is_valid():
-            user = userForm.save(commit=False)
             voter = voterForm.save(commit=False)
+            user = userForm.save(commit=False)
             voter.admin = user
             user.save()
             voter.save()
@@ -155,9 +155,9 @@ def view_voter_by_id(request):
     else:
         context['code'] = 200
         voter = voter[0]
-        context['first_name'] = voter.admin.first_name
-        context['last_name'] = voter.admin.last_name
         context['cédula'] = voter.cédula
+        context['nombre'] = voter.admin.nombre
+        context['apellido'] = voter.admin.apellido
         context['id'] = voter.id
         context['email'] = voter.admin.email
     return JsonResponse(context)

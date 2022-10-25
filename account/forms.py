@@ -12,24 +12,24 @@ class FormSettings(forms.ModelForm):
 
 class CustomUserForm(FormSettings):
     email = forms.EmailField(required=True)
-    password = forms.CharField(widget=forms.PasswordInput)
+    contraseña = forms.CharField(widget=forms.PasswordInput)
 
     widget = {
-        'password': forms.PasswordInput(),
+        'contraseña': forms.PasswordInput(),
     }
 
     def __init__(self, *args, **kwargs):
         super(CustomUserForm, self).__init__(*args, **kwargs)
         if kwargs.get('instance'):
             instance = kwargs.get('instance').__dict__
-            self.fields['password'].required = False
+            self.fields['contraseña'].required = False
             for field in CustomUserForm.Meta.fields:
                 self.fields[field].initial = instance.get(field)
             if self.instance.pk is not None:
-                self.fields['password'].widget.attrs['placeholder'] = "Rellene los campos si desea cambiar su contraseña."
+                self.fields['contraseña'].widget.attrs['placeholder'] = "Rellene los campos si desea cambiar su contraseña."
         else:
-            self.fields['first_name'].required = True
-            self.fields['last_name'].required = True
+            self.fields['nombre'].required = True
+            self.fields['apellido'].required = True
 
     def clean_email(self, *args, **kwargs):
         formEmail = self.cleaned_data['email'].lower()
@@ -47,14 +47,14 @@ class CustomUserForm(FormSettings):
         return formEmail
 
     def clean_password(self):
-        password = self.cleaned_data.get("password", None)
+        contraseña = self.cleaned_data.get("contraseña", None)
         if self.instance.pk is not None:
-            if not password:
+            if not contraseña:
                 # return None
-                return self.instance.password
+                return self.instance.contraseña
 
-        return make_password(password)
+        return make_password(contraseña)
 
     class Meta:
         model = CustomUser
-        fields = ['last_name', 'first_name', 'email', 'password', ]
+        fields = ['apellido', 'nombre', 'email', 'contraseña', ]

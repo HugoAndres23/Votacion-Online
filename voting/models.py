@@ -1,3 +1,4 @@
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from account.models import CustomUser
 # Create your models here.
@@ -5,14 +6,14 @@ from account.models import CustomUser
 
 class Voter(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    cédula = models.CharField(max_length=10, unique=True)
+    cédula = models.PositiveIntegerField(min_value=10000000, max_value=9999999999, unique=True)
     otp = models.CharField(max_length=10, null=True)
     verified = models.BooleanField(default=False)
     voted = models.BooleanField(default=False)
     otp_sent = models.IntegerField(default=0)  # Control how many OTPs are sent
 
     def __str__(self):
-        return self.admin.last_name + ", " + self.admin.first_name
+        return self.admin.apellido + ", " + self.admin.nombre
 
 
 class Position(models.Model):

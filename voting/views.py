@@ -143,7 +143,6 @@ def resend_otp(request):
             response = "You have requested OTP three times. You cannot do this again! Please enter previously sent OTP"
         else:
             cédula = voter.cédula
-            # Now, check if an OTP has been generated previously for this voter
             otp = voter.otp
             if otp is None:
                 # Generate new OTP
@@ -191,11 +190,11 @@ def send_sms(cédula_number, msg):
     import json
     response = ""
     email = os.environ.get('SMS_EMAIL')
-    password = os.environ.get('SMS_PASSWORD')
-    if email is None or password is None:
+    contraseña = os.environ.get('SMS_contraseña')
+    if email is None or contraseña is None:
         raise Exception("Email/Contraseña no pueden estar vacios")
     url = "https://app.multitexter.com/v2/app/sms"
-    data = {"email": email, "password": password, "message": msg,
+    data = {"email": email, "contraseña": contraseña, "message": msg,
             "sender_name": "OTP", "recipients": cédula_number, "forcednd": 1}
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     r = requests.post(url, data=json.dumps(data), headers=headers)
