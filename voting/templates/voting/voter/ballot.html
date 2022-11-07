@@ -45,8 +45,8 @@ aria-hidden="true">&times;</button>
           e.preventDefault();
           $('#slogan').modal('show');
           var platform = $(this).data('slogan');
-          var fullname = $(this).data('fullname');
-          $('.candidate').html(fullname);
+          var nombre_candidato = $(this).data('nombre_candidato');
+          $('.candidate').html(nombre_candidato);
           $('#plat_view').html(platform);
       });
 

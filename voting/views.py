@@ -40,9 +40,9 @@ def generate_ballot(display_controls=False):
                 input_box = '<input value="'+str(candidate.id)+'" type="radio" class="flat-red ' + \
                     candidatura_name+'" name="'+candidatura_name+'">'
             image = "/media/" + str(candidate.foto)
-            candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-fullname="'+candidate.fullname+'" data-slogan="'+candidate.slogan+'"><i class="fa fa-search"></i> Información</button><img src="' + \
+            candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-nombre_candidato="'+candidate.nombre_candidato+'" data-slogan="'+candidate.slogan+'"><i class="fa fa-search"></i> Información</button><img src="' + \
                 image+'" height="100px" width="100px" class="clist"><span class="cname clist">' + \
-                candidate.fullname+'</span></li>'
+                candidate.nombre_candidato+'</span></li>'
         up = ''
         if candidatura.priority == 1:
             up = 'disabled'
@@ -284,7 +284,7 @@ def preview_vote(request):
                             candidate = Candidate.objects.get(
                                 id=form_candidate_id, candidatura=candidatura)
                             data += f"""
-		                      	<li><i class="fa fa-check-square-o"></i> {candidate.fullname}</li>
+		                      	<li><i class="fa fa-check-square-o"></i> {candidate.nombre_candidato}</li>
                             """
                         except:
                             error = True
@@ -303,7 +303,7 @@ def preview_vote(request):
                     output += f"""
                             <div class='row votelist' style='padding-bottom: 2px'>
 		                      	<span class='col-sm-4'><span class='pull-right'><b>{candidatura.name} :</b></span></span>
-		                      	<span class='col-sm-8'><i class="fa fa-check-circle-o"></i> {candidate.fullname}</span>
+		                      	<span class='col-sm-8'><i class="fa fa-check-circle-o"></i> {candidate.nombre_candidato}</span>
 		                    </div>
                       <hr/>
                     """

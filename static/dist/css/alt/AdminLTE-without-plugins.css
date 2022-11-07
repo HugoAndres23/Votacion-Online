@@ -2239,13 +2239,13 @@ a:focus {
   background-color: #367fa9;
 }
 .btn-success {
-  background-color: #00a65a;
-  border-color: #008d4c;
+  background-color: #060534;
+  border-color: #060534;
 }
 .btn-success:hover,
 .btn-success:active,
 .btn-success.hover {
-  background-color: #008d4c;
+  background-color: #060534;
 }
 .btn-info {
   background-color: #00c0ef;

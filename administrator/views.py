@@ -53,7 +53,7 @@ class PrintView(PDFView):
             for candidate in Candidate.objects.filter(candidatura=candidatura):
                 this_candidate_data = {}
                 votes = Votes.objects.filter(candidate=candidate).count()
-                this_candidate_data['name'] = candidate.fullname
+                this_candidate_data['name'] = candidate.nombre_candidato
                 this_candidate_data['votes'] = votes
                 candidate_data.append(this_candidate_data)
             print("Candidate Data For  ", str(
@@ -102,7 +102,7 @@ def dashboard(request):
         list_of_candidates = []
         votes_count = []
         for candidate in Candidate.objects.filter(candidatura=candidatura):
-            list_of_candidates.append(candidate.fullname)
+            list_of_candidates.append(candidate.nombre_candidato)
             votes = Votes.objects.filter(candidate=candidate).count()
             votes_count.append(votes)
         chart_data[candidatura] = {
@@ -311,7 +311,7 @@ def view_candidate_by_id(request):
     else:
         candidate = candidate[0]
         context['code'] = 200
-        context['fullname'] = candidate.fullname
+        context['nombre_candidato'] = candidate.nombre_candidato
         previous = CandidateForm(instance=candidate)
         context['form'] = str(previous.as_p())
     return JsonResponse(context)

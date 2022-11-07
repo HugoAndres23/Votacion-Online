@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             name='Candidate',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('fullname', models.CharField(max_length=50)),
+                ('nombre_candidato', models.CharField(max_length=50)),
                 ('foto', models.ImageField(upload_to='candidates')),
                 ('slogan', models.TextField()),
             ],

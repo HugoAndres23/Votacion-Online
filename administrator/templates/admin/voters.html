@@ -160,7 +160,7 @@
           {% csrf_token %}
           <div class="text-center">
             <p>Eliminar votante</p>
-            <h2 class="bold fullname"></h2>
+            <h2 class="bold nombre_candidato"></h2>
           </div>
       </div>
       <div class="modal-footer">
@@ -213,7 +213,7 @@
         $('#edit_lastname').val(response.last_name);
         $('#edit_cédula').val(response.cédula);
         $('#edit_email').val(response.email);
-        $('.fullname').html(response.first_name + ' ' + response.last_name);
+        $('.nombre_candidato').html(response.first_name + ' ' + response.last_name);
       }
     });
   }
