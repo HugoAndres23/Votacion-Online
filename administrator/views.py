@@ -47,7 +47,7 @@ class PrintView(PDFView):
             pass
         context = super().get_context_data(*args, **kwargs)
         candidatura_data = {}
-        for candidatura in candidatura.objects.all():
+        for candidatura in Candidatura.objects.all():
             candidate_data = []
             winner = ""
             for candidate in Candidate.objects.filter(candidatura=candidatura):
@@ -57,14 +57,14 @@ class PrintView(PDFView):
                 this_candidate_data['votes'] = votes
                 candidate_data.append(this_candidate_data)
             print("Candidate Data For  ", str(
-                candidatura.name), " = ", str(candidate_data))
+                Candidatura.nombre_candidatura), " = ", str(candidate_data))
             # ! Check Winner
             if len(candidate_data) < 1:
                 winner = "Esta candidatura no tiene candidatos"
             else:
-                # Check if max_vote is more than 1
-                if candidatura.max_vote > 1:
-                    winner = find_n_winners(candidate_data, candidatura.max_vote)
+                # Check if maximo_votos is more than 1
+                if Candidatura.maximo_votos > 1:
+                    winner = find_n_winners(candidate_data, Candidatura.maximo_votos)
                 else:
 
                     winner = max(candidate_data, key=lambda x: x['votes'])
@@ -81,9 +81,9 @@ class PrintView(PDFView):
                         else:
                             winner = "Ganador : " + winner['name']
             print("Candidate Data For  ", str(
-                candidatura.name), " = ", str(candidate_data))
-            candidatura_data[candidatura.name] = {
-                'candidate_data': candidate_data, 'winner': winner, 'max_vote': candidatura.max_vote}
+                Candidatura.nombre_candidatura), " = ", str(candidate_data))
+            candidatura_data[Candidatura.nombre_candidatura] = {
+                'candidate_data': candidate_data, 'winner': winner, 'maximo_votos': Candidatura.maximo_votos}
         context['candidaturas'] = candidatura_data
         print(context)
         return context
@@ -165,15 +165,15 @@ def view_voter_by_id(request):
 
 def view_candidatura_by_id(request):
     pos_id = request.GET.get('id', None)
-    pos = candidatura.objects.filter(id=pos_id)
+    pos = Candidatura.objects.filter(id=pos_id)
     context = {}
     if not pos.exists():
         context['code'] = 404
     else:
         context['code'] = 200
         pos = pos[0]
-        context['name'] = pos.name
-        context['max_vote'] = pos.max_vote
+        context['nombre_candidatura'] = pos.nombre_candidatura
+        context['maximo_votos'] = pos.maximo_votos
         context['id'] = pos.id
     return JsonResponse(context)
 
@@ -230,7 +230,7 @@ def updatePosition(request):
     if request.method != 'POST':
         messages.error(request, "Acceso denegado")
     try:
-        instance = candidatura.objects.get(id=request.POST.get('id'))
+        instance = Candidatura.objects.get(id=request.POST.get('id'))
         pos = PositionForm(request.POST or None, instance=instance)
         pos.save()
         messages.success(request, "Candidatura modificada con exito!")
@@ -244,7 +244,7 @@ def deletePosition(request):
     if request.method != 'POST':
         messages.error(request, "Acceso denegado")
     try:
-        pos = candidatura.objects.get(id=request.POST.get('id'))
+        pos = Candidatura.objects.get(id=request.POST.get('id'))
         pos.delete()
         messages.success(request, "Candidatura eliminada.")
     except:
@@ -329,28 +329,28 @@ def update_ballot_position(request, candidatura_id, up_or_down):
         context = {
             'error': False
         }
-        candidatura = candidatura.objects.get(id=candidatura_id)
+        candidatura = Candidatura.objects.get(id=candidatura_id)
         if up_or_down == 'up':
-            priority = candidatura.priority - 1
+            priority = Candidatura.priority - 1
             if priority == 0:
                 context['error'] = True
                 output = "This candidatura is already at the top"
             else:
-                candidatura.objects.filter(priority=priority).update(
+                Candidatura.objects.filter(priority=priority).update(
                     priority=(priority+1))
-                candidatura.priority = priority
-                candidatura.save()
+                Candidatura.priority = priority
+                Candidatura.save()
                 output = "Moved Up"
         else:
-            priority = candidatura.priority + 1
-            if priority > candidatura.objects.all().count():
+            priority = Candidatura.priority + 1
+            if priority > Candidatura.objects.all().count():
                 output = "This candidatura is already at the bottom"
                 context['error'] = True
             else:
-                candidatura.objects.filter(priority=priority).update(
+                Candidatura.objects.filter(priority=priority).update(
                     priority=(priority-1))
-                candidatura.priority = priority
-                candidatura.save()
+                Candidatura.priority = priority
+                Candidatura.save()
                 output = "Moved Down"
         context['message'] = output
     except Exception as e:

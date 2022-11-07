@@ -19,51 +19,51 @@ def index(request):
 
 
 def generate_ballot(display_controls=False):
-    candidaturas = candidatura.objects.order_by('priority').all()
+    candidaturas = Candidatura.objects.order_by('priority').all()
     output = ""
     candidates_data = ""
     num = 1
     # return None
     for candidatura in candidaturas:
-        name = candidatura.name
-        candidatura_name = slugify(name)
+        nombre_candidatura = Candidatura.nombre_candidatura
+        Candidatura_nombre_candidatura = slugify(nombre_candidatura)
         candidates = Candidate.objects.filter(candidatura=candidatura)
         for candidate in candidates:
-            if candidatura.max_vote > 1:
+            if candidatura.maximo_votos > 1:
                 instruction = "Puedes seleccionar " + \
-                    str(candidatura.max_vote) + " candidatos"
+                    str(Candidatura.maximo_votos) + " candidatos"
                 input_box = '<input type="checkbox" value="'+str(candidate.id)+'" class="flat-red ' + \
-                    candidatura_name+'" name="' + \
-                    candidatura_name+"[]" + '">'
+                    Candidatura_nombre_candidatura+'" name="' + \
+                    Candidatura_nombre_candidatura+"[]" + '">'
             else:
                 instruction = "Seleccione solo 1 candidato"
                 input_box = '<input value="'+str(candidate.id)+'" type="radio" class="flat-red ' + \
-                    candidatura_name+'" name="'+candidatura_name+'">'
+                    Candidatura_nombre_candidatura+'" name="'+Candidatura_nombre_candidatura+'">'
             image = "/media/" + str(candidate.foto)
             candidates_data = candidates_data + '<li>' + input_box + '<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-nombre_candidato="'+candidate.nombre_candidato+'" data-slogan="'+candidate.slogan+'"><i class="fa fa-search"></i> Información</button><img src="' + \
                 image+'" height="100px" width="100px" class="clist"><span class="cname clist">' + \
                 candidate.nombre_candidato+'</span></li>'
         up = ''
-        if candidatura.priority == 1:
+        if Candidatura.priority == 1:
             up = 'disabled'
         down = ''
-        if candidatura.priority == candidaturas.count():
+        if Candidatura.priority == candidaturas.count():
             down = 'disabled'
-        output = output + f"""<div class="row">	<div class="col-xs-12"><div class="box box-solid" id="{candidatura.id}">
+        output = output + f"""<div class="row">	<div class="col-xs-12"><div class="box box-solid" id="{Candidatura.id}">
              <div class="box-header with-border">
-            <h3 class="box-title"><b>{name}</b></h3>"""
+            <h3 class="box-title"><b>{nombre_candidatura}</b></h3>"""
 
         if display_controls:
             output = output + f""" <div class="pull-right box-tools">
-        <button type="button" class="btn btn-default btn-sm moveup" data-id="{candidatura.id}" {up}><i class="fa fa-arrow-up"></i> </button>
-        <button type="button" class="btn btn-default btn-sm movedown" data-id="{candidatura.id}" {down}><i class="fa fa-arrow-down"></i></button>
+        <button type="button" class="btn btn-default btn-sm moveup" data-id="{Candidatura.id}" {up}><i class="fa fa-arrow-up"></i> </button>
+        <button type="button" class="btn btn-default btn-sm movedown" data-id="{Candidatura.id}" {down}><i class="fa fa-arrow-down"></i></button>
         </div>"""
 
         output = output + f"""</div>
         <div class="box-body">
         <p>{instruction}
         <span class="pull-right">
-        <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="{candidatura_name}"><i class="fa fa-refresh"></i> Reiniciar</button>
+        <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="{Candidatura_nombre_candidatura}"><i class="fa fa-refresh"></i> Reiniciar</button>
         </span>
         </p>
         <div id="candidate_list">
@@ -76,7 +76,7 @@ def generate_ballot(display_controls=False):
         </div>
         </div>
         """
-        candidatura.priority = num
+        Candidatura.priority = num
         candidatura.save()
         num = num + 1
         candidates_data = ''
@@ -253,25 +253,25 @@ def preview_vote(request):
         form.pop('csrfmiddlewaretoken', None)
         error = False
         data = []
-        candidaturas = candidatura.objects.all()
+        candidaturas = Candidatura.objects.all()
         for candidatura in candidaturas:
-            max_vote = candidatura.max_vote
-            pos = slugify(candidatura.name)
-            pos_id = candidatura.id
-            if candidatura.max_vote > 1:
+            maximo_votos = Candidatura.maximo_votos
+            pos = slugify(Candidatura.nombre_candidatura)
+            pos_id = Candidatura.id
+            if Candidatura.maximo_votos > 1:
                 this_key = pos + "[]"
                 form_candidatura = form.get(this_key)
                 if form_position is None:
                     continue
-                if len(form_position) > max_vote:
+                if len(form_position) > maximo_votos:
                     error = True
                     response = "You can only choose " + \
-                        str(max_vote) + " candidates for " + candidatura.name
+                        str(maximo_votos) + " candidates for " + Candidatura.nombre_candidatura
                 else:
                     # for key, value in form.items():
                     start_tag = f"""
                        <div class='row votelist' style='padding-bottom: 2px'>
-		                      	<span class='col-sm-4'><span class='pull-right'><b>{candidatura.name} :</b></span></span>
+		                      	<span class='col-sm-4'><span class='pull-right'><b>{Candidatura.nombre_candidatura} :</b></span></span>
 		                      	<span class='col-sm-8'>
                                 <ul style='list-style-type:none; margin-left:-40px'>
                                 
@@ -302,7 +302,7 @@ def preview_vote(request):
                         candidatura=candidatura, id=form_position)
                     output += f"""
                             <div class='row votelist' style='padding-bottom: 2px'>
-		                      	<span class='col-sm-4'><span class='pull-right'><b>{candidatura.name} :</b></span></span>
+		                      	<span class='col-sm-4'><span class='pull-right'><b>{Candidatura.nombre_candidatura} :</b></span></span>
 		                      	<span class='col-sm-8'><i class="fa fa-check-circle-o"></i> {candidate.nombre_candidato}</span>
 		                    </div>
                       <hr/>
@@ -336,20 +336,20 @@ def submit_ballot(request):
     if len(form.keys()) < 1:
         messages.error(request, "Por favor seleccione un candidato")
         return redirect(reverse('show_ballot'))
-    candidaturas = candidatura.objects.all()
+    candidaturas = Candidatura.objects.all()
     form_count = 0
     for candidatura in candidaturas:
-        max_vote = candidatura.max_vote
-        pos = slugify(candidatura.name)
-        pos_id = candidatura.id
-        if candidatura.max_vote > 1:
+        maximo_votos = Candidatura.maximo_votos
+        pos = slugify(Candidatura.nombre_candidatura)
+        pos_id = Candidatura.id
+        if Candidatura.maximo_votos > 1:
             this_key = pos + "[]"
             form_position = form.get(this_key)
             if form_position is None:
                 continue
-            if len(form_position) > max_vote:
+            if len(form_position) > maximo_votos:
                 messages.error(request, "You can only choose " +
-                               str(max_vote) + " candidates for " + candidatura.name)
+                               str(maximo_votos) + " candidates for " + Candidatura.nombre_candidatura)
                 return redirect(reverse('show_ballot'))
             else:
                 for form_candidate_id in form_position:

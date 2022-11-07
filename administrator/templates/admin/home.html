@@ -80,11 +80,11 @@
      <div class='col-sm-6'>
       <div class='box box-solid'>
         <div class='box-header with-border'>
-          <h4 class='box-title'><b>{{ candidatura.name }}</b></h4>
+          <h4 class='box-title'><b>{{ candidatura.nombre_candidatura }}</b></h4>
         </div>
         <div class='box-body'>
           <div class='chart'>
-            <canvas id='{{ candidatura.name|slugify }}' style='height:200px'></canvas>
+            <canvas id='{{ candidatura.nombre_candidatura|slugify }}' style='height:200px'></canvas>
           </div>
         </div>
       </div>

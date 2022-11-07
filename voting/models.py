@@ -17,12 +17,12 @@ class Voter(models.Model):
 
 
 class Candidatura(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    max_vote = models.IntegerField()
+    nombre_candidatura = models.CharField(max_length=50, unique=True)
+    maximo_votos = models.IntegerField()
     priority = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return self.nombre_candidatura
 
 
 class Candidate(models.Model):

@@ -12,7 +12,7 @@ class VoterForm(FormSettings):
 class PositionForm(FormSettings):
     class Meta:
         model = Candidatura
-        fields = ['name', 'max_vote']
+        fields = ['nombre_candidatura', 'maximo_votos']
 
 
 class CandidateForm(FormSettings):

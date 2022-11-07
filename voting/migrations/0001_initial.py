@@ -27,8 +27,8 @@ class Migration(migrations.Migration):
             name='candidatura',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, unique=True)),
-                ('max_vote', models.IntegerField()),
+                ('nombre_candidatura', models.CharField(max_length=50, unique=True)),
+                ('maximo_votos', models.IntegerField()),
                 ('priority', models.IntegerField()),
             ],
         ),

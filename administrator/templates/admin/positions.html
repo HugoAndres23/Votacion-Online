@@ -20,8 +20,8 @@
     {% for candidatura in candidaturas %}
       
     <tr>
-      <td>{{ candidatura.name }}</td>
-      <td>{{ candidatura.max_vote }}</td>
+      <td>{{ candidatura.nombre_candidatura }}</td>
+      <td>{{ candidatura.maximo_votos }}</td>
       <td>{{ candidatura.priority }}</td>
       
       <td>
@@ -88,15 +88,15 @@
                 <label for="name" class="col-sm-3 control-label">Nombre</label>
 
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="name" name="name">
+                  <input type="text" class="form-control" id="nombre_candidatura" name="nombre_candidatura">
                 </div>
             </div>
 
             <div class="form-group">
-              <label for="max_vote" class="col-sm-3 control-label">Maximo numero de votos</label>
+              <label for="maximo_votos" class="col-sm-3 control-label">Maximo numero de votos</label>
 
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="max_vote" name="max_vote">
+                <input type="text" class="form-control" id="maximo_votos" name="maximo_votos">
               </div>
           </div>
              
@@ -174,8 +174,8 @@
           dataType: 'json',
           success: function(response) {
               $('.id').val(response.id);
-              $('#max_vote').val(response.max_vote);
-              $('#name').val(response.name);
+              $('#maximo_votos').val(response.maximo_votos);
+              $('#nombre_candidatura').val(response.nombre_candidatura);
               $('.nombre_candidato').html(response.name);
           }
       });
