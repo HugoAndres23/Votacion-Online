@@ -1,5 +1,7 @@
 from pathlib import Path
 import os
+from django import django_heroku
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -8,7 +10,7 @@ SECRET_KEY = '%6lp_p!%r$7t-2ql5hc5(r@)8u_fc+6@ugxcnz=h=b(fn#3$p9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -133,7 +135,7 @@ ELECTION_TITLE_PATH = os.path.join(
 
 SEND_OTP = False  # If you toggle this to False, Kindly use 0000 as your OTP
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_TMP = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
@@ -143,3 +145,4 @@ os.makedirs(STATIC_ROOT, exist_ok=True)
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+django_heroku.settings(locals())
