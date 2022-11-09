@@ -1,5 +1,4 @@
-"""e_voting URL Configuration
-
+"""
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 Examples:
@@ -22,6 +21,6 @@ urlpatterns = [
     path('', include('account.urls')),
     path('account/', include('account.urls')),
     path('admin/', admin.site.urls),
-    path('administrator/', include('administrator.urls')),
+    path('administrador/', include('administrador.urls')),
     path('voting/', include('voting.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

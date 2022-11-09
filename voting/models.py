@@ -6,11 +6,11 @@ from account.models import CustomUser
 
 class Voter(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    cédula = models.IntegerField(unique=True)
+    cédula = models.CharField(max_length = 10, unique=True)
     otp = models.CharField(max_length=10, null=True)
     verified = models.BooleanField(default=False)
     voted = models.BooleanField(default=False)
-    otp_sent = models.IntegerField(default=0)  # Control how many OTPs are sent
+    otp_sent = models.IntegerField(default=0)
 
     def __str__(self):
         return self.admin.apellido + ", " + self.admin.nombre

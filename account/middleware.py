@@ -19,18 +19,18 @@ class AccountCheckMiddleWare(MiddlewareMixin):
                             request, "No tienes permiso a esta recurso.")
                         return redirect(reverse('adminDashboard'))
             elif user.user_type == '2':  # Voter
-                if modulename == 'administrator.views':
+                if modulename == 'administrador.views':
                     messages.error(
                         request, "No tienes acceso a este recurso.")
                     return redirect(reverse('voterDashboard'))
-            else:  #  Please take the user to login page
+            else:  # Please take the user to login page
                 return redirect(reverse('account_login'))
         else:
             # If the path is login or has anything to do with authentication, pass
             if request.path == reverse('account_login') or request.path == reverse('account_register') or modulename == 'django.contrib.auth.views' or request.path == reverse('account_login'):
                 pass
-            elif modulename == 'administrator.views' or modulename == 'voting.views':
-                # If visitor tries to access administrator or voters functions
+            elif modulename == 'administrador.views' or modulename == 'voting.views':
+                #
                 messages.error(
                     request, "Necesitas estar logueado para realizar esta accion.")
                 return redirect(reverse('account_login'))

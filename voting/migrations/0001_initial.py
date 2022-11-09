@@ -4,6 +4,9 @@ from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
 
+min_length = 100000
+max_length = 20000000000
+
 
 class Migration(migrations.Migration):
 
@@ -17,7 +20,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Candidate',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('nombre_candidato', models.CharField(max_length=50)),
                 ('foto', models.ImageField(upload_to='candidates')),
                 ('slogan', models.TextField()),
@@ -26,8 +30,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='candidatura',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nombre_candidatura', models.CharField(max_length=50, unique=True)),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('nombre_candidatura', models.CharField(
+                    max_length=50, unique=True)),
                 ('maximo_votos', models.IntegerField()),
                 ('priority', models.IntegerField()),
             ],
@@ -35,27 +41,34 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Voter',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cédula', models.CharField(max_length=10, unique=True)),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('cédula', models.PositiveIntegerField(max_length=10, unique=True)),
                 ('otp', models.CharField(max_length=10, null=True)),
                 ('verified', models.BooleanField(default=False)),
                 ('voted', models.BooleanField(default=False)),
                 ('otp_sent', models.IntegerField(default=0)),
-                ('admin', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('admin', models.OneToOneField(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
             name='Votes',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('candidate', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='voting.candidate')),
-                ('candidatura', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='voting.candidatura')),
-                ('voter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='voting.voter')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('candidate', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='voting.candidate')),
+                ('candidatura', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='voting.candidatura')),
+                ('voter', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='voting.voter')),
             ],
         ),
         migrations.AddField(
             model_name='candidate',
             name='candidatura',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='voting.candidatura'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='voting.candidatura'),
         ),
     ]

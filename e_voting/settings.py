@@ -25,7 +25,7 @@ INSTALLED_APPS = [
 
     'account.apps.AccountConfig',
     'voting.apps.VotingConfig',
-    'administrator.apps.AdministratorConfig',
+    'administrador.apps.AdministradorConfig',
 ]
 
 MIDDLEWARE = [
@@ -45,7 +45,7 @@ ROOT_URLCONF = 'e_voting.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['voting/templates', 'administrator/templates'],
+        'DIRS': ['voting/templates', 'administrador/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -136,4 +136,4 @@ ELECTION_TITLE_PATH = os.path.join(
 SEND_OTP = False  # If you toggle this to False, Kindly use 0000 as your OTP
 
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#django_heroku.settings(locals())
+# django_heroku.settings(locals())
