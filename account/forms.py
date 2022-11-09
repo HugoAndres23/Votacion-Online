@@ -52,7 +52,6 @@ class CustomUserForm(FormSettings):
             if not password:
                 # return None
                 return self.instance.password
-
         return make_password(password)
 
     class Meta:
