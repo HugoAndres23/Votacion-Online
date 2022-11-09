@@ -190,11 +190,11 @@ def send_sms(cédula_number, msg):
     import json
     response = ""
     email = os.environ.get('SMS_EMAIL')
-    contraseña = os.environ.get('SMS_contraseña')
-    if email is None or contraseña is None:
-        raise Exception("Email/Contraseña no pueden estar vacios")
+    password = os.environ.get('SMS_password')
+    if email is None or password is None:
+        raise Exception("Email/password no pueden estar vacios")
     url = "https://app.multitexter.com/v2/app/sms"
-    data = {"email": email, "contraseña": contraseña, "message": msg,
+    data = {"email": email, "password": password, "message": msg,
             "sender_name": "OTP", "recipients": cédula_number, "forcednd": 1}
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     r = requests.post(url, data=json.dumps(data), headers=headers)

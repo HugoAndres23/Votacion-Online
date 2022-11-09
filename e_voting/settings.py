@@ -1,6 +1,6 @@
 from pathlib import Path
 import os
-from django import django_heroku
+#from django import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -135,5 +135,5 @@ ELECTION_TITLE_PATH = os.path.join(
 
 SEND_OTP = False  # If you toggle this to False, Kindly use 0000 as your OTP
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-django_heroku.settings(locals())
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#django_heroku.settings(locals())
