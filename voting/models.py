@@ -10,7 +10,7 @@ class Voter(models.Model):
     otp = models.CharField(max_length=10, null=True)
     verified = models.BooleanField(default=False)
     voted = models.BooleanField(default=False)
-    otp_sent = models.IntegerField(default=0)  # Control how many OTPs are sent
+    otp_sent = models.IntegerField(default=0)
 
     def __str__(self):
         return self.admin.apellido + ", " + self.admin.nombre

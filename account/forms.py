@@ -12,21 +12,21 @@ class FormSettings(forms.ModelForm):
 
 class CustomUserForm(FormSettings):
     email = forms.EmailField(required=True)
-    contraseña = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput)
 
     widget = {
-        'contraseña': forms.PasswordInput(),
+        'password': forms.PasswordInput(),
     }
 
     def __init__(self, *args, **kwargs):
         super(CustomUserForm, self).__init__(*args, **kwargs)
         if kwargs.get('instance'):
             instance = kwargs.get('instance').__dict__
-            self.fields['contraseña'].required = False
+            self.fields['password'].required = False
             for field in CustomUserForm.Meta.fields:
                 self.fields[field].initial = instance.get(field)
             if self.instance.pk is not None:
-                self.fields['contraseña'].widget.attrs['placeholder'] = "Rellene los campos si desea cambiar su contraseña."
+                self.fields['password'].widget.attrs['placeholder'] = "Rellene los campos si desea cambiar su password."
         else:
             self.fields['nombre'].required = True
             self.fields['apellido'].required = True
@@ -47,14 +47,14 @@ class CustomUserForm(FormSettings):
         return formEmail
 
     def clean_password(self):
-        contraseña = self.cleaned_data.get("contraseña", None)
+        password = self.cleaned_data.get("password", None)
         if self.instance.pk is not None:
-            if not contraseña:
+            if not password:
                 # return None
-                return self.instance.contraseña
+                return self.instance.password
 
-        return make_password(contraseña)
+        return make_password(password)
 
     class Meta:
         model = CustomUser
-        fields = ['apellido', 'nombre', 'email', 'contraseña', ]
+        fields = ['apellido', 'nombre', 'email', 'password', ]

@@ -17,7 +17,7 @@ def account_login(request):
     context = {}
     if request.method == 'POST':
         user = EmailBackend.authenticate(request, username=request.POST.get(
-            'email'), contraseña=request.POST.get('contraseña'))
+            'email'), password=request.POST.get('password'))
         if user != None:
             login(request, user)
             if user.user_type == '1':
@@ -45,7 +45,8 @@ def account_register(request):
             voter.admin = user
             user.save()
             voter.save()
-            messages.success(request, "Cuenta creada con exito! Puedes iniciar sesion.")
+            messages.success(
+                request, "Cuenta creada con exito! Puedes iniciar sesion.")
             return redirect(reverse('account_login'))
         else:
             messages.error(request, "Validacion de información fallada")

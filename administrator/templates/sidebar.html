@@ -6,7 +6,7 @@
     <div class="user-panel">
       <div class="pull-left image">
         <img
-          src="{% static 'images/userplaceholder.png' %}"
+          src="{% static 'images/userplaceholder.jpg' %}"
           class="img-circle"
           alt="User Image"
         />
@@ -26,32 +26,8 @@
           ><i class="fa fa-dashboard"></i> <span>Panel de control</span></a
         >
       </li>
-      <li class="">
-        <a href="{% url 'viewVotes' %}"
-          ><span class="glyphicon glyphicon-lock"></span> <span>Votos</span></a
-        >
-      </li>
-      <li class="header">Configurar</li>
-      <li class="">
-        <a href="{% url 'adminViewVoters' %}"
-          ><i class="fa fa-users"></i> <span>Votantes</span></a
-        >
-      </li>
-      <li class="">
-        <a href="{% url 'viewPositions' %}"
-          ><i class="fa fa-tasks"></i> <span>Candidaturas</span></a
-        >
-      </li>
-      <li class="">
-        <a href="{% url 'viewCandidates' %}"
-          ><i class="fa fa-black-tie"></i> <span>Candidatos</span></a
-        >
-      </li>
       <li class="header">Editar</li>
       <li class="">
-        {% comment %} <a href="{% url 'ballot_position' %}"
-          ><i class="fa fa-file-text"></i> <span>Ballot Position</span></a
-        > {% endcomment %}
       </li>
       <li class="">
         <a href="#config" data-toggle="modal"
