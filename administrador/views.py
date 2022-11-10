@@ -57,13 +57,13 @@ class PrintView(PDFView):
                 this_candidate_data['votes'] = votes
                 candidate_data.append(this_candidate_data)
             print("Candidate Data For  ", str(
-                Candidatura.nombre_candidatura), " = ", str(candidate_data))
+                candidatura.nombre_candidatura), " = ", str(candidate_data))
             # ! Check Winner
             if len(candidate_data) < 1:
                 winner = "Esta candidatura no tiene candidatos"
             else:
                 # Check if maximo_votos is more than 1
-                if Candidatura.maximo_votos > 1:
+                if candidatura.maximo_votos > 1:
                     winner = find_n_winners(candidate_data, Candidatura.maximo_votos)
                 else:
 
@@ -82,8 +82,8 @@ class PrintView(PDFView):
                             winner = "Ganador : " + winner['name']
             print("Candidate Data For  ", str(
                 Candidatura.nombre_candidatura), " = ", str(candidate_data))
-            candidatura_data[Candidatura.nombre_candidatura] = {
-                'candidate_data': candidate_data, 'winner': winner, 'maximo_votos': Candidatura.maximo_votos}
+            candidatura_data[candidatura.nombre_candidatura] = {
+                'candidate_data': candidate_data, 'winner': winner, 'maximo_votos': candidatura.maximo_votos}
         context['candidaturas'] = candidatura_data
         print(context)
         return context
